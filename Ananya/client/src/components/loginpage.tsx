@@ -36,8 +36,7 @@ const LoginComponent = () => {
         if (data === "") {
         toast.error("Invalid username or password");
         } else {
-        localStorage.setItem("ID", data.id);
-        localStorage.setItem("username", data.name);
+        sessionStorage.setItem("username", data.name);
         navigate("/");
         }
       } catch (error) {
@@ -115,7 +114,7 @@ const LoginComponent = () => {
                     className="fw-normal mb-1 pb-3"
                     style={{ letterSpacing: 1 }}
                   >
-                    Sign into your account
+                    Sign to Fly High
                   </h5>
                   <div className="form-outline mb-1">
                     <input
@@ -149,7 +148,7 @@ const LoginComponent = () => {
                   </div>
                   <p className="mb-1 pb-lg-2" style={{ color: "#393f81" }}>
                     Don't have an account?{" "}
-                    <a href="/register" style={{ color: "#393f81" }}>
+                    <a href="/signup" style={{ color: "#393f81" }}>
                       Register here
                     </a>
                   </p>

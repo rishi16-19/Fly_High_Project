@@ -1,29 +1,26 @@
 import React, { useState, useEffect, CSSProperties } from 'react';
-import axios from 'axios'; // Import Axios
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
+import { cityData } from '../../appconstants';
+
 const MiddlePage: React.FC = () => {
     const [flightType, setFlightType] = useState('One Way');
     const [fromLocation, setFromLocation] = useState('Delhi');
     const [toLocation, setToLocation] = useState('Mumbai');
-    const [departureDate, setDepartureDate] = useState('');
+    const [departureDate, setDepartureDate] = useState(0);
+    const navigate = useNavigate()
+
     const handleSearch = () => {
-        console.log('Searching flights...');
-        axios.get(`http://localhost:8080/flight/${fromLocation}/${toLocation}/${departureDate}`)
-            .then(response => {
-                console.log('Flight search successful:', response.data);
-            })
-            .catch(error => {
-                console.error('Error searching flights:', error);
-            });
+
+        navigate(`./list/${fromLocation}/${toLocation}/${departureDate}` , {state:{from: cityData.flights[fromLocation.toLowerCase()],to: cityData.flights[toLocation.toLowerCase()], departureDate}})
     };
+
     useEffect(() => {
-        // Prevent scrolling when the component mounts
         document.body.style.overflow = 'hidden';
-        // Re-enable scrolling when the component unmounts
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, []); // Empty dependency array ensures this effect runs only once, similar to componentDidMount
+    }, []);
+
     const containerStyle: CSSProperties = {
         marginTop: '5rem',
         backgroundColor: '#fff',
@@ -39,6 +36,7 @@ const MiddlePage: React.FC = () => {
         backgroundSize: 'cover',
         overflow: 'hidden',
     };
+
     const contentContainerStyle: CSSProperties = {
         display: 'flex',
         flexDirection: 'column',
@@ -48,13 +46,15 @@ const MiddlePage: React.FC = () => {
         marginRight: '350px',
         marginBottom: '160px',
         overflow: 'hidden',
-        padding: '100px'
+        padding:'100px'
     };
+
     const inputContainerStyle: CSSProperties = {
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%',
     };
+
     const inputStyle: CSSProperties = {
         margin: '20px',
         padding: '30px', // Increase input box height
@@ -62,14 +62,25 @@ const MiddlePage: React.FC = () => {
         borderRadius: '20px', // Add border radius
         border: '1px solid #ccc',
     };
+
     const buttonStyle: CSSProperties = {
         padding: '15px 30px', // Increase button padding
-        backgroundColor: '#007BFF',
+        backgroundColor: '#007bff',
         border: 'none',
         borderRadius: '20px', // Add border radius
         color: '#fff',
         cursor: 'pointer',
     };
+
+    function setDate(value: string): void {
+        const dt = new Date(value);
+          let year = dt.getFullYear();
+          let month = dt.getMonth()+1;
+          let day = dt.getDate();
+          setDepartureDate(day)
+        
+    }
+
     return (
         <div style={containerStyle as React.CSSProperties}>
             <div style={contentContainerStyle as React.CSSProperties}>
@@ -92,7 +103,7 @@ const MiddlePage: React.FC = () => {
                     <input type="text" placeholder="To" value={toLocation} onChange={(e) => setToLocation(e.target.value)} style={inputStyle as React.CSSProperties} />
                 </div>
                 <div>
-                    <input type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} style={inputStyle as React.CSSProperties} />
+                    <input type="date" value={departureDate} onChange={(e) => setDate(e.target.value)} style={inputStyle as React.CSSProperties} />
                 </div>
                 <div>
                     <button onClick={handleSearch} style={buttonStyle as React.CSSProperties}>Search</button>
@@ -101,4 +112,5 @@ const MiddlePage: React.FC = () => {
         </div>
     );
 };
+
 export default MiddlePage;
