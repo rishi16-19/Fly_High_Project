@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useState } from "react";
-const BookingDetails = ({ data }) => {
+import { useData } from '../components/Context';
+const BookingDetails = ({ data ,sendData}) => {
+    const [statee , setStatee] = useState('')
     useEffect(()=>{
         if(!sessionStorage.getItem('user')){
             console.log("not logged in")
@@ -10,6 +13,9 @@ const BookingDetails = ({ data }) => {
   const [passengers, setPassengers] = useState([{ name: "", age: "" , email: ""}]);
   const handleAddPassenger = () => {
     setPassengers([...passengers, {name:'' , age:'' , email: ''}]);
+    sendData([...passengers, { name: '', age: '', email: '' }]);
+    data.price = 2*data.price;
+    data['state'] = statee
   };
 
   const handleChange = (index, e) => {
@@ -18,10 +24,10 @@ const BookingDetails = ({ data }) => {
     newPassengers[index][name] = value;
     setPassengers(newPassengers);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Use passengers state for submitting data or other operations
+    sendData(passengers)
+    useData(passengers)
     console.log(passengers);
   };
   return (
@@ -51,18 +57,12 @@ const BookingDetails = ({ data }) => {
 
         <div className="flightDetails3">
           <div className="sourceDetails">
-            <h4>Time</h4>
-            <h4>Place</h4>
-            <span>
-              Terminalllllllllllllllllllllllllllllllllllllllllllllllllll
-            </span>
+            <h4>{data.sourceTime}</h4>
+            <h4>{data.sourceCode}</h4>
           </div>
           <div className="destDetails">
-            <h4>Time</h4>
-            <h4>Place</h4>
-            <span>
-              Terminalllllllllllllllllllllllllllllllllllllllllllllllllll
-            </span>
+            <h4>{data.destTime}</h4>
+            <h4>{data.destCode}</h4>
           </div>
           <div className="line"></div>
           <div className="infos">
@@ -190,6 +190,7 @@ const BookingDetails = ({ data }) => {
                 name="state"
                 id="state"
                 required
+                onClick={(e) => {setStatee(e.target.value)}}
               />
               <label htmlFor="state" className="form__label">
                 State
