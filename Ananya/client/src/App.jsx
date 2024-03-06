@@ -5,6 +5,7 @@ import LoginPage from "./components/loginpage"
 import { Route,Routes } from "react-router-dom"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./components/signup"
+import BookingDetails from "./components/BookingDetails"
 
 function App() {
   const dummyData = [
@@ -22,6 +23,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element= {<LoginPage />} />
       <Route path="/signup" element= {<SignUp />} />
+      <Route path="/details" element= {<PaymentPage data={dummyData}/>} />
     </Routes>
      
     </>

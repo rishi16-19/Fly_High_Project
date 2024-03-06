@@ -1,17 +1,21 @@
 import React, { useState, useEffect, CSSProperties } from 'react';
+import axios from 'axios'; // Import Axios
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-
 const MiddlePage: React.FC = () => {
     const [flightType, setFlightType] = useState('One Way');
     const [fromLocation, setFromLocation] = useState('Delhi');
     const [toLocation, setToLocation] = useState('Mumbai');
     const [departureDate, setDepartureDate] = useState('');
-
     const handleSearch = () => {
-        // Implement search functionality here
         console.log('Searching flights...');
+        axios.get(`http://localhost:8080/flight/${fromLocation}/${toLocation}/${departureDate}`)
+            .then(response => {
+                console.log('Flight search successful:', response.data);
+            })
+            .catch(error => {
+                console.error('Error searching flights:', error);
+            });
     };
-
     useEffect(() => {
         // Prevent scrolling when the component mounts
         document.body.style.overflow = 'hidden';
@@ -20,7 +24,6 @@ const MiddlePage: React.FC = () => {
             document.body.style.overflow = 'unset';
         };
     }, []); // Empty dependency array ensures this effect runs only once, similar to componentDidMount
-
     const containerStyle: CSSProperties = {
         marginTop: '5rem',
         backgroundColor: '#fff',
@@ -36,7 +39,6 @@ const MiddlePage: React.FC = () => {
         backgroundSize: 'cover',
         overflow: 'hidden',
     };
-
     const contentContainerStyle: CSSProperties = {
         display: 'flex',
         flexDirection: 'column',
@@ -46,15 +48,13 @@ const MiddlePage: React.FC = () => {
         marginRight: '350px',
         marginBottom: '160px',
         overflow: 'hidden',
-        padding:'100px'
+        padding: '100px'
     };
-
     const inputContainerStyle: CSSProperties = {
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%',
     };
-
     const inputStyle: CSSProperties = {
         margin: '20px',
         padding: '30px', // Increase input box height
@@ -62,16 +62,14 @@ const MiddlePage: React.FC = () => {
         borderRadius: '20px', // Add border radius
         border: '1px solid #ccc',
     };
-
     const buttonStyle: CSSProperties = {
         padding: '15px 30px', // Increase button padding
-        backgroundColor: '#007bff',
+        backgroundColor: '#007BFF',
         border: 'none',
         borderRadius: '20px', // Add border radius
         color: '#fff',
         cursor: 'pointer',
     };
-
     return (
         <div style={containerStyle as React.CSSProperties}>
             <div style={contentContainerStyle as React.CSSProperties}>
@@ -103,5 +101,4 @@ const MiddlePage: React.FC = () => {
         </div>
     );
 };
-
 export default MiddlePage;
