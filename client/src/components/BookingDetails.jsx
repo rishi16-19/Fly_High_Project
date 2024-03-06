@@ -3,14 +3,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 const BookingDetails = ({ data }) => {
     useEffect(()=>{
-        if(!localStorage.getItem('user')){
+        if(!sessionStorage.getItem('user')){
             console.log("not logged in")
         }
     })
-  const [passengers, setPassengers] = useState([{ name: "", age: "" }]);
-
+  const [passengers, setPassengers] = useState([{ name: "", age: "" , email: ""}]);
   const handleAddPassenger = () => {
-    setPassengers([...passengers, { name: "", age: "" }]);
+    setPassengers([...passengers, {name:'' , age:'' , email: ''}]);
   };
 
   const handleChange = (index, e) => {
@@ -121,7 +120,7 @@ const BookingDetails = ({ data }) => {
       <div className="headerr" style={{display:'flex' , justifyContent: 'space-between'}}>
 
         <h2 className="item">Passenger Details</h2>
-        <button type="button" id="addPassenger" onClick={handleAddPassenger}>
+        <button type="button" id="addPassenger" onClick={() =>handleAddPassenger()}>
           Add Passenger
         </button>
       </div>
@@ -134,6 +133,7 @@ const BookingDetails = ({ data }) => {
                 placeholder="Name"
                 name="name"
                 id="name"
+                onChange={(e)=> handleChange(index ,e)}
                 required
               />
               <label htmlFor="name" className="form__label">
@@ -148,6 +148,7 @@ const BookingDetails = ({ data }) => {
                   name="email"
                   id="email"
                   required
+                  onChange={(e)=> handleChange(index ,e)}
                 />
                 <label htmlFor="email" className="form__label">
                   Email
@@ -160,6 +161,7 @@ const BookingDetails = ({ data }) => {
                   placeholder="Age"
                   name="age"
                   id="age"
+                  onChange={(e)=> handleChange(index ,e)}
                   required
                 />
                 <label htmlFor="age" className="form__label">
