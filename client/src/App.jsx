@@ -1,4 +1,5 @@
-
+import PaymentPage from "./pages/PaymentPage"
+import './App.css'
 
 function App() {
   const dummyData = [
@@ -11,7 +12,7 @@ function App() {
 
   return (
     <>
-     
+     <PaymentPage data = {dummyData[0]}/>
     </>
   )
 }
