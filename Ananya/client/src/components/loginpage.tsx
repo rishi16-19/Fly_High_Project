@@ -26,30 +26,28 @@ const LoginComponent = () => {
     const username = values.name
     const password = values.pass
 
-      if (handleValidate()) {
-    
-        const  {data} = await axios.post("http://localhost:8080/login", {
-          username,
-          password,
+    if (handleValidate()) {
+      try {
+        const { data } = await axios.post("http://localhost:8080/login", {
+        username,
+        password,
         });
-        // console.log(data)
-        if(data===''){
-          
-          toast.error("Invalid username or password")
+        console.log(data);
+        if (data === "") {
+        toast.error("Invalid username or password");
+        } else {
+        localStorage.setItem("ID", data.id);
+        localStorage.setItem("username", data.name);
+        navigate("/");
         }
-        else{
-          //  console.log(data.id)
-          localStorage.setItem('ID',data.id)
-          localStorage.setItem('username',data.name);
-          // sessionStorage.setItem('chat-app-user', JSON.stringify(data.user));
-          navigate('/dashboard')
+      } catch (error) {
+        if (error.response && error.response.status === 403) {
+        toast.error("Please Register first");
+        } else {
+        toast.error("An error occurred");
         }
-        // if(data.status===true){
-        //   localStorage.setItem('jwt',data.token)
-        //   sessionStorage.setItem('chat-app-user', JSON.stringify(data.user));
-        //   navigate('/');
-        // }
       }
+    }
     }
 
       const toastOptions:ToastOptions = {
@@ -89,7 +87,7 @@ const LoginComponent = () => {
       };
   return (
     <div>
- <section className="vh-100" style={{ backgroundColor: "#1DA1F2" }}>
+ <section className="vh-100" style={{ backgroundColor: "#99918f" }}>
   <div className="container py-5 h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div className="col col-xl-10">
@@ -97,7 +95,7 @@ const LoginComponent = () => {
           <div className="row g-0" style={{height:"400px"}}>
             <div className="col-md-6 col-lg-5 d-none d-md-block" style={{height:"100%"}}>
               <img
-                src="https://cdn-icons-png.flaticon.com/512/124/124021.png"
+                src="https://media.istockphoto.com/id/530568719/photo/passenger-airplane-taking-off-at-sunset.jpg?s=612x612&w=0&k=20&c=XkAgyOR8kkY7kgfx2TtuXAilzWkJodleFDQbj_GEBXA="
                 alt="login form"
                 className="img-fluid"
                 style={{ borderRadius: "1rem 0 0 1rem", height: "100%"}}
@@ -111,7 +109,7 @@ const LoginComponent = () => {
                       className="fas fa-cubes fa-2x me-3"
                       style={{ color: "#ff6219" }}
                     /> */}
-                    <span className="h1 fw-bold mb-0" style={{color:"#89CFF0"}}>Twitter</span>
+                    <span className="h1 fw-bold mb-0" style={{color:"#89CFF0"}}>LOGIN</span>
                   </div>
                   <h5
                     className="fw-normal mb-1 pb-3"
