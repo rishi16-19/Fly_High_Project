@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import BookingDetails from '../components/BookingDetails'
 import TotalFare from '../components/TotalFare'
-import { DataProvider } from '../components/Context'
 import '../components/paymentPage.css'
 
 const PaymentPage = ({data}) => {
@@ -13,7 +12,6 @@ const PaymentPage = ({data}) => {
   }
     console.log(data)
   return (
-    <DataProvider>
 
     <div className='bookingContainer' style={{display:'flex' , flexDirection: 'column'}}>
       <h2>Complete Booking Details</h2>
@@ -23,7 +21,6 @@ const PaymentPage = ({data}) => {
         <TotalFare data={data} passangerData = {passangerData}/>
       </div>
     </div>
-    </DataProvider>
   )
 }
 

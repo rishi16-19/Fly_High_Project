@@ -25,14 +25,11 @@ function App() {
     <div style={{height:'5rem'}}></div>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element= {<LoginComponent />} />
+      {/* <Route path="/login" element= {<LoginComponent />} />
       <Route path="/signup" element= {<Register />} />
       <Route path="/details" element= {<PaymentPage data={dummyData[0]}/>} />
-      <Route path="/final" element={<Form />} />
-      <Route path="/" element={<MiddlePage />} />
-        <Route path="/list/:src/:dest/:dt" element={<NextPage />} />
+      <Route path="/final" element={<Form />} /> */}
     </Routes>
-     {/* <PaymentPage data = {dummyData[0]}/> */}
     </>
   )
 }

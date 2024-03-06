@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useState } from "react";
-import { useData } from '../components/Context';
 import Heading from "./Heading";
 const BookingDetails = ({ data ,sendData}) => {
     const [statee , setStatee] = useState('')
@@ -28,7 +27,6 @@ const BookingDetails = ({ data ,sendData}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendData(passengers)
-    useData(passengers)
     console.log(passengers);
   };
   return (
