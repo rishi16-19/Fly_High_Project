@@ -35,6 +35,7 @@ public class FlightController {
 	
 	@GetMapping("/flight")
 	List<Flight> getAllFlights(){
+		logger.info("inside method");
 		return flightService.getAllFlights();
 	}
 	
@@ -44,19 +45,28 @@ public class FlightController {
 	}
 	
 	@GetMapping("/flight/{src_code}/{dest_code}")
-	List<Flight> getSourceFlights(@PathVariable String src_code,@PathVariable String dest_code){
+	List<List<Flight>> getSourceFlights(@PathVariable String src_code,@PathVariable String dest_code){
 		logger.info(src_code+" "+dest_code);
-		return flightService.getSourceAndDestFlights(src_code,dest_code);
+		List<Flight> directFlight=flightService.getSourceAndDestFlights(src_code, dest_code);
+		List<List<Flight>> allFlights= flightService.getOneStopFlights(src_code,dest_code);
+		
+		allFlights.add(directFlight);
+		return allFlights;
+	
 	}
 	
 	
 	@GetMapping("flight/{src_code}/{dest_code}/{date}")
-	List<Flight> getSourceAndDestAndDateFlights(@PathVariable String src_code,@PathVariable String dest_code
+	List<List<Flight>> getSourceAndDestAndDateFlights(@PathVariable String src_code,@PathVariable String dest_code
 			,@PathVariable int date){
 		
 		logger.info("Inside the get mapping of src and dates");
 		
-		return flightService.getSourceAndDestAndDateFlights(src_code,dest_code, date);
+		List<Flight> directFlight=flightService.getSourceAndDestAndDateFlights(src_code, dest_code,date);
+		List<List<Flight>> allFlights= flightService.getOneStopFlights(src_code,dest_code);
+		
+		allFlights.add(directFlight);
+		return allFlights;
 	}
 	
 	@GetMapping("/flight/{date}")

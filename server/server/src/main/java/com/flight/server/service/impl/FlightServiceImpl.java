@@ -1,5 +1,6 @@
 package com.flight.server.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.BsonTimestamp;
@@ -125,9 +126,46 @@ public class FlightServiceImpl implements FlightService {
             // Handle the exception as per your requirement
             e.printStackTrace();
         }
+        
+        
         return flights;
 		
 	}
+	
+	@Override
+	public List<List<Flight>> getOneStopFlights(String src_code, String dest_code) {
+	    List<List<Flight>> oneStopFlights = new ArrayList<>();
+
+	    // Find all flights leaving from src_code
+	    Query querySrc = new Query();
+	    querySrc.addCriteria(Criteria.where("src_code").is(src_code));
+	    List<Flight> sourceFlights = mongoTemplate.find(querySrc, Flight.class);
+
+	    // Find all flights going to dest_code
+	    Query queryDest = new Query();
+	    queryDest.addCriteria(Criteria.where("dest_code").is(dest_code));
+	    List<Flight> destinationFlights = mongoTemplate.find(queryDest, Flight.class);
+
+	    // Loop through all source flights and destination flights to find matching one-stop flights
+	    for (Flight srcFlight : sourceFlights) {
+	        for (Flight destFlight : destinationFlights) {
+	            // Check if the destination of the first flight matches the source of the second
+	            // And if the arrival time of the first is before the departure of the second
+	            if (srcFlight.getDestCode().equals(destFlight.getSrcCode()) && srcFlight.getDestTime().compareTo(destFlight.getSrcTime()) < 0 && srcFlight.getDate()==destFlight.getDate()) {
+	                List<Flight> oneStopFlightPair = new ArrayList<>();
+	                
+	                logger.info(srcFlight.toString()+"  "+destFlight.toString());
+	                
+	                oneStopFlightPair.add(srcFlight);
+	                oneStopFlightPair.add(destFlight);
+	                oneStopFlights.add(oneStopFlightPair);
+	            }
+	        }
+	    }
+
+	    return oneStopFlights;
+	}
+
 
 	@Override
 	public List<Flight> getSourceAndDestAndDateAndTimeFlights(String src_code, String dest_code, int date, long time) {

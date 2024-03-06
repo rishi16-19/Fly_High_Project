@@ -10,6 +10,7 @@ public interface FlightService {
 	
 	List<Flight> getAllFlights();
 	void save(Flight flight);
+	public List<List<Flight>> getOneStopFlights(String src_code, String dest_code);
 	List<Flight> getSourceFlights(String src_code);
 	List<Flight> getSourceAndDestFlights(String src_code,String dest_code);
 	List<Flight> getSourceAndDestAndDateFlights(String src_code,String dest_code,int date);
