@@ -1,42 +1,179 @@
-import React from 'react';
 
-const LoginPage: React.FC = () => {
-    return (
-        <section className="vh-100 gradient-custom">
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-                        <div className="card" style={{ backgroundColor: '#007bff', color: 'black', borderRadius: '1rem' }}>
-                            <div className="card-body p-5 text-center">
-                                <div className="mb-md-5 mt-md-4 pb-5">
-                                    <h2 className="fw-bold mb-2 text-white uppercase italic">Fly High</h2>
-                                    <p className="text-white-50 mb-5">Please enter your login and password!</p>
-                                    <div className="form-outline form-white mb-4">
-                                        <input type="email" id="typeEmailX" className="form-control form-control-lg" />
-                                        <label className="form-label text-white" htmlFor="typeEmailX">Email</label>
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input type="password" id="typePasswordX" className="form-control form-control-lg" />
-                                        <label className="form-label text-white" htmlFor="typePasswordX">Password</label>
-                                    </div>
-                                    <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
-                                    <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-                                    <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                                        <a href="#!" className="text-white"><i className="fab fa-facebook-f fa-lg"></i></a>
-                                        <a href="#!" className="text-white"><i className="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                                        <a href="#!" className="text-white"><i className="fab fa-google fa-lg"></i></a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+import { ToastContainer, ToastOptions, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import React from "react";
+
+const LoginComponent = () => {
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState(
+    {
+      name: '',
+      pass: ''
+    }
+  )
+
+  // const show=()=> {
+  //  console.log(values);
+  // }
+
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const username = values.name
+    const password = values.pass
+
+      if (handleValidate()) {
+    
+        const  {data} = await axios.post("http://localhost:8080/login", {
+          username,
+          password,
+        });
+        // console.log(data)
+        if(data===''){
+          
+          toast.error("Invalid username or password")
+        }
+        else{
+          //  console.log(data.id)
+          localStorage.setItem('ID',data.id)
+          localStorage.setItem('username',data.name);
+          // sessionStorage.setItem('chat-app-user', JSON.stringify(data.user));
+          navigate('/dashboard')
+        }
+        // if(data.status===true){
+        //   localStorage.setItem('jwt',data.token)
+        //   sessionStorage.setItem('chat-app-user', JSON.stringify(data.user));
+        //   navigate('/');
+        // }
+      }
+    }
+
+      const toastOptions:ToastOptions = {
+        theme: "dark",
+        draggable: true,
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+      };
+
+      
+      const handleValidate = () => {
+        const { pass, name } = values;
+        // console.log(password , username)
+        if (pass === "" && name === "") {
+          toast.warning("Please Fill this up to login");
+          return false;
+        }
+        if (pass === "" || name === "") {
+      
+          if (pass === "")
+            toast.warning("Please enter the password", toastOptions);
+      
+          if (name === "")
+            toast.warning("Please enter the username", toastOptions);
+      
+          return false;
+        }
+        //  if (username.length < 4) {
+        //   toast.error("Username must be atleast of 4 character long", toastOptions);
+        //   return false;
+        // } else if (password.length < 8) {
+        //   toast.error("Password must be 8 character long", toastOptions);
+        //   return false;
+        // }
+        return true;
+      };
+  return (
+    <div>
+ <section className="vh-100" style={{ backgroundColor: "#1DA1F2" }}>
+  <div className="container py-5 h-100">
+    <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="col col-xl-10">
+        <div className="card" style={{ borderRadius: "1rem" }}>
+          <div className="row g-0" style={{height:"400px"}}>
+            <div className="col-md-6 col-lg-5 d-none d-md-block" style={{height:"100%"}}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/124/124021.png"
+                alt="login form"
+                className="img-fluid"
+                style={{ borderRadius: "1rem 0 0 1rem", height: "100%"}}
+              />
             </div>
-        </section>
-    );
-};
+            <div className="col-md-4  col-lg-7 gx-4 d-flex align-items-center" >
+              <div className="card-body text-black" style={{height:"100%"}} >
+                <form>
+                  <div className="d-flex align-items-center mb-3 "  >
+                    {/* <i
+                      className="fas fa-cubes fa-2x me-3"
+                      style={{ color: "#ff6219" }}
+                    /> */}
+                    <span className="h1 fw-bold mb-0" style={{color:"#89CFF0"}}>Twitter</span>
+                  </div>
+                  <h5
+                    className="fw-normal mb-1 pb-3"
+                    style={{ letterSpacing: 1 }}
+                  >
+                    Sign into your account
+                  </h5>
+                  <div className="form-outline mb-1">
+                    <input
+                      type="text"
+                      id="form2Example17"
+                      className="form-control"
+                      onChange={(e) => setValues({...values, name: e.target.value})}
+                    />
+                    <label className="form-label" htmlFor="form2Example17">
+                      User Name
+                    </label>
+                  </div>
+                  <div className="form-outline mb-1">
+                    <input
+                      type="password"
+                      id="form2Example27"
+                      className="form-control "
+                      onChange={(e) => setValues({...values, pass: e.target.value})}
+                    />
+                    <label className="form-label" htmlFor="form2Example27">
+                      Password
+                    </label>
+                  </div>
+                  <div className="pt-1 mb-3">
+                    <button
+                      className="btn btn-dark btn-lg btn-block"
+                      type="button" onClick={(e) => handleSubmit(e)}
+                    >
+                      Login 
+                    </button>
+                  </div>
+                  <p className="mb-1 pb-lg-2" style={{ color: "#393f81" }}>
+                    Don't have an account?{" "}
+                    <a href="/register" style={{ color: "#393f81" }}>
+                      Register here
+                    </a>
+                  </p>
+                  <a href="#!" className="small text-muted">
+                    Terms of use.
+                  </a>
+                  <a href="#!" className="small text-muted">
+                    Privacy policy
+                  </a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ToastContainer />
+      
+    </div>
+  )
+}
 
-export default LoginPage;
+export default LoginComponent
