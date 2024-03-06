@@ -6,10 +6,11 @@ function App() {
 
   return (
     <>
-    <div className='body'>
-      <SideBar/>
-      <FlightList/>
-    </div>
+    <Header />
+      <Routes>
+        <Route path="/" element={<MiddlePage />} />
+        <Route path="/list/:src/:dest/:dt" element={<NextPage />} />
+      </Routes>
       
     </>
   )
