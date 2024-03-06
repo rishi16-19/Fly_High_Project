@@ -5,7 +5,7 @@ const SideBar = () => {
 
     return (
         <>
-            <div className="sidebar" style={{ position: 'sticky', padding: "10px" }}>
+            <div className="sidebar" style={{ position: 'sticky', padding: "10px", borderRadius:"10px" }}>
                 <h3 style={{fontStyle:"bold"}}>Popular Filters</h3>
                 <FormGroup style={{fontSize:"small"}}>
                     <FormControlLabel control={<Checkbox />} label="Late Departures" />

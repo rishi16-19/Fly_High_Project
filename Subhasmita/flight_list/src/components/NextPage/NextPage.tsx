@@ -1,11 +1,11 @@
-import { useLocation} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import FlightList from "../FlightList/FlightList"
 import Header from "../NavBar/NavBar"
 import SideBar from "../SideBar/SideBar"
 
 function NextPage() {
-    const data = useLocation().state
-    console.log(data)
+    const srcCodep = useParams();
+    console.log(srcCodep)
     return (
       <>
         <Header />
@@ -13,7 +13,7 @@ function NextPage() {
         <div>
           <div className='body'>
             <SideBar />
-            <FlightList props={data}/>
+            <FlightList props={srcCodep}/>
           </div>
         </div>  
       </>

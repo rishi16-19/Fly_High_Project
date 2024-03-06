@@ -1,17 +1,20 @@
 import './index.css'
-import FlightList from './components/FlightList/FlightList'
-import SideBar from './components/SideBar/SideBar'
+import Header from './components/NavBar/NavBar'
+import { Routes, Route } from 'react-router-dom'
+import MiddlePage from './components/HomePage/HomePage'
+import NextPage from './components/NextPage/NextPage'
 
 function App() {
 
   return (
     <>
-    <Header />
+      <Header />
       <Routes>
         <Route path="/" element={<MiddlePage />} />
         <Route path="/list/:src/:dest/:dt" element={<NextPage />} />
+
       </Routes>
-      
+
     </>
   )
 }

@@ -10,8 +10,7 @@ const MiddlePage: React.FC = () => {
     const navigate = useNavigate()
 
     const handleSearch = () => {
-
-        navigate(`./list/${fromLocation}/${toLocation}/${departureDate}` , {state:{from: cityData.flights[fromLocation.toLowerCase()],to: cityData.flights[toLocation.toLowerCase()], departureDate}})
+        navigate("./list/"+cityData.flights[fromLocation.toLowerCase()]+"/"+cityData.flights[toLocation.toLowerCase()]+"/"+departureDate)
     };
 
     useEffect(() => {

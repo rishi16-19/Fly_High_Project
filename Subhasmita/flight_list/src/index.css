@@ -3,27 +3,11 @@
   min-height: auto;
   min-width: fit-content;
   margin-left: auto;
+  overflow-x:scroll;
   margin-right: auto;
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://t4.ftcdn.net/jpg/05/16/69/35/240_F_516693520_CST0DwZpOi828fRpVPPoKI7pecuei5SY.jpg");
   padding: 0 10px;
-  }
-  
-  .sidebar {
-  border: 3.2px solid;
-  flex: 0.2;  
-  min-width: 210px;
-  height: fit-content;
-  margin-top: 20px;
-  margin-left: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  }
-
-  .container{
-    flex: 0.5;
-    padding-left: 20px;
-    margin-top: 20px;
-    min-width: fit-content;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }

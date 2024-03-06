@@ -1,4 +1,4 @@
-#flightListContainer {
+.flightListContainer {
     flex: 0.5;
     padding-left: 20px;
     margin-top: 20px;
