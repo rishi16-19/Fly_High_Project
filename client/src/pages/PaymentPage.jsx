@@ -3,6 +3,7 @@ import { useState } from 'react'
 import BookingDetails from '../components/BookingDetails'
 import TotalFare from '../components/TotalFare'
 import { DataProvider } from '../components/Context'
+import '../components/paymentPage.css'
 
 const PaymentPage = ({data}) => {
   const [passangerData , setPassangerData] = useState([])

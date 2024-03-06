@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import { useData } from '../components/Context';
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TotalFare = ({ data , passangerData }) => {
-  const dataa= useData();
-  console.log(passangerData)
+  const navigate = useNavigate()
+  const finalPay = () =>{
+    navigate('/final' , {state : passangerData})
+  }
   useEffect(()=>{
 
   },[data , passangerData])
@@ -27,13 +29,13 @@ const TotalFare = ({ data , passangerData }) => {
         </span>
       </div>
       <div className="bookbtn">
-      <a className="button" href="#" onClick={()=>{}}>
+      <button className="button" onClick={()=>{finalPay()}}>
         <span></span>
         <span></span>
         <span></span>
         <span></span>
         Book Now
-      </a>
+      </button>
       </div>
     </div>
   );

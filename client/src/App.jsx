@@ -1,5 +1,14 @@
 import PaymentPage from "./pages/PaymentPage"
 import './App.css'
+import { Route, Routes } from "react-router-dom"
+
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import HomePage from "./pages/Homepage"
+import LoginComponent from "./components/loginpage"
+import Register from "./components/signup"
+import Form from "./pages/formcomponent";
+import Header from "./components/headercomp";
+import MiddlePage from "./components/middlecomp";
 
 function App() {
   const dummyData = [
@@ -12,7 +21,18 @@ function App() {
 
   return (
     <>
-     <PaymentPage data = {dummyData[0]}/>
+    <Header />
+    <div style={{height:'5rem'}}></div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element= {<LoginComponent />} />
+      <Route path="/signup" element= {<Register />} />
+      <Route path="/details" element= {<PaymentPage data={dummyData[0]}/>} />
+      <Route path="/final" element={<Form />} />
+      <Route path="/" element={<MiddlePage />} />
+        <Route path="/list/:src/:dest/:dt" element={<NextPage />} />
+    </Routes>
+     {/* <PaymentPage data = {dummyData[0]}/> */}
     </>
   )
 }

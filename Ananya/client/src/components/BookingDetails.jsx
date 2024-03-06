@@ -1,17 +1,21 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useState } from "react";
-
-const BookingDetails = ({ data }) => {
+import { useData } from '../components/Context';
+const BookingDetails = ({ data ,sendData}) => {
+    const [statee , setStatee] = useState('')
     useEffect(()=>{
-        if(!sessionStorage.getItem('username')){
+        if(!sessionStorage.getItem('user')){
             console.log("not logged in")
         }
     })
-  const [passengers, setPassengers] = useState([{ name: "", age: "" }]);
-
+  const [passengers, setPassengers] = useState([{ name: "", age: "" , email: ""}]);
   const handleAddPassenger = () => {
-    setPassengers([...passengers, { name: "", age: "" }]);
+    setPassengers([...passengers, {name:'' , age:'' , email: ''}]);
+    sendData([...passengers, { name: '', age: '', email: '' }]);
+    data.price = 2*data.price;
+    data['state'] = statee
   };
 
   const handleChange = (index, e) => {
@@ -20,10 +24,10 @@ const BookingDetails = ({ data }) => {
     newPassengers[index][name] = value;
     setPassengers(newPassengers);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Use passengers state for submitting data or other operations
+    sendData(passengers)
+    useData(passengers)
     console.log(passengers);
   };
   return (
@@ -53,18 +57,12 @@ const BookingDetails = ({ data }) => {
 
         <div className="flightDetails3">
           <div className="sourceDetails">
-            <h4>Time</h4>
-            <h4>Place</h4>
-            <span>
-              Terminalllllllllllllllllllllllllllllllllllllllllllllllllll
-            </span>
+            <h4>{data.sourceTime}</h4>
+            <h4>{data.sourceCode}</h4>
           </div>
           <div className="destDetails">
-            <h4>Time</h4>
-            <h4>Place</h4>
-            <span>
-              Terminalllllllllllllllllllllllllllllllllllllllllllllllllll
-            </span>
+            <h4>{data.destTime}</h4>
+            <h4>{data.destCode}</h4>
           </div>
           <div className="line"></div>
           <div className="infos">
@@ -110,9 +108,9 @@ const BookingDetails = ({ data }) => {
           <div className="penalty" style={{ fontSize: "15px" }}>
             <h4>Cancellation Between: </h4>
             <h5>
-              {/* {" "}
+              {" "}
               {data.sourceTime.split(":")[0] - 2} :{" "}
-              {data.sourceTime.split(":")[0]} */}
+              {data.sourceTime.split(":")[0]}
             </h5>
             <h5> {data.sourceTime}</h5>
           </div>
@@ -122,7 +120,7 @@ const BookingDetails = ({ data }) => {
       <div className="headerr" style={{display:'flex' , justifyContent: 'space-between'}}>
 
         <h2 className="item">Passenger Details</h2>
-        <button type="button" id="addPassenger" onClick={handleAddPassenger}>
+        <button type="button" id="addPassenger" onClick={() =>handleAddPassenger()}>
           Add Passenger
         </button>
       </div>
@@ -135,6 +133,7 @@ const BookingDetails = ({ data }) => {
                 placeholder="Name"
                 name="name"
                 id="name"
+                onChange={(e)=> handleChange(index ,e)}
                 required
               />
               <label htmlFor="name" className="form__label">
@@ -149,6 +148,7 @@ const BookingDetails = ({ data }) => {
                   name="email"
                   id="email"
                   required
+                  onChange={(e)=> handleChange(index ,e)}
                 />
                 <label htmlFor="email" className="form__label">
                   Email
@@ -161,6 +161,7 @@ const BookingDetails = ({ data }) => {
                   placeholder="Age"
                   name="age"
                   id="age"
+                  onChange={(e)=> handleChange(index ,e)}
                   required
                 />
                 <label htmlFor="age" className="form__label">
@@ -189,6 +190,7 @@ const BookingDetails = ({ data }) => {
                 name="state"
                 id="state"
                 required
+                onClick={(e) => {setStatee(e.target.value)}}
               />
               <label htmlFor="state" className="form__label">
                 State
