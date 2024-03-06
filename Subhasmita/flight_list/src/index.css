@@ -1,0 +1,29 @@
+.body {
+  display: flex;
+  min-height: auto;
+  min-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+  }
+  
+  .sidebar {
+  border: 3.2px solid;
+  flex: 0.2;  
+  min-width: 210px;
+  height: fit-content;
+  margin-top: 20px;
+  margin-left: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  }
+
+  .container{
+    flex: 0.5;
+    padding-left: 20px;
+    margin-top: 20px;
+    min-width: fit-content;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
